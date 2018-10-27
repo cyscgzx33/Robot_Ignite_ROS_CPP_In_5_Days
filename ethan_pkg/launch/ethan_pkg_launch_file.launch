@@ -1,0 +1,5 @@
+<launch>
+  <!-- turtlebot_teleop_key already has its own built in velocity smoother -->
+  <node pkg="ethan_pkg" type="simple" name="initial"  output="screen">
+  </node>
+</launch>
