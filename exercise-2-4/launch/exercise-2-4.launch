@@ -1,0 +1,3 @@
+<launch>
+   <node pkg = "exercise-2-4" type = "simple_odom_subscriber" name = "odom_subscriber" output = "screen" />
+</launch>   
