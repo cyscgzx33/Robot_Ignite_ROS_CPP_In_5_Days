@@ -1,0 +1,11 @@
+{
+	"type": "pane",
+	"name": "pane0",
+	"nodes": [],
+	"skin": "editor_tab",
+	"skinset": "default",
+	"meta": {
+		"accessList": []
+	},
+	"focus": null
+}
