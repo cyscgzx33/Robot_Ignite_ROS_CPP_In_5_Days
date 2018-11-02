@@ -12,13 +12,13 @@ add_message_files(
   Age.msg
 )
 
-generate_messages
+generate_messages(
   DEPENDENCIES
   std_msgs
 )
 
 catkin_package(
-  CATKIN_DEPENDS roscpp std_msgs message_generation
+  CATKIN_DEPENDS roscpp std_msgs message_runtime
 )
 
 include_directories(
