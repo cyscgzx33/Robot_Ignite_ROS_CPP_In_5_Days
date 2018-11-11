@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "topic_mini_proj" type = "topic_mini_proj" name = "motion_control" output = "screen" />
+</launch>
