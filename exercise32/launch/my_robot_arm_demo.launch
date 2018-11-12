@@ -1,0 +1,7 @@
+<launch>
+    <include file = "$(find iri_wam_reproduce_trajectory)/launch/start_service.launch" />
+    
+    <!-- here will go to our c++ code that calls the execute_trajectory service -->
+    <node pkg = "exercise32" type = "exec_traj" name = "execute_trajectory_node" output = "screen" />
+    
+</launch>
