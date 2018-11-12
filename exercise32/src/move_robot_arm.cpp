@@ -30,6 +30,7 @@ int main (int argc, char** argv) {
     
     // using for debugging
     ROS_INFO("%s", "Before call service /execute_trajectory");
+    ROS_INFO("The file path is: %s", srv.request.file.c_str());
     
     
     // send through the connection of the name of the path above to be executed
