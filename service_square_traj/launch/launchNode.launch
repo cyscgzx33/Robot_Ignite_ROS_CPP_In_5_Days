@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "service_square_traj" type = "service_square_traj" name = "moveBB8Server" output = "screen" />
+</launch>
