@@ -12,7 +12,7 @@ int main(int argc, char** argv) {
         
         mv_bb8.rate_sleep();
         
-        ros::spin();
+        ros::spinOnce();
         
     }
     
