@@ -21,6 +21,9 @@ namespace srv_sqr_traj {
         float duration_;
         int times_;
         
+        /* ROS services */
+        ros::ServiceServer srv_perform_square_;
+        
     public:
         move_bb8();
         
@@ -33,6 +36,9 @@ namespace srv_sqr_traj {
         void runtimeStateMachine();
         
         void changeState(int state, float duaration);
+        
+        bool cbfunc(std_srvs::Empty::Request &req,
+                    std_srvs::Empty::Response &res);
         
     };
 

@@ -8,14 +8,24 @@ namespace srv_sqr_traj {
         state_ = 0;
         rate_hz_ = 20;
         // Seems like the time elapsed of one state
-        duration_ = 0; 
-        times_ = 4 * 1;
+        duration_ = 0;
+        
+        // set times_ = 4 * 1 when performing without ros::Service()
+        // times_ = 4 * 1;
+        
+        // set times_ = 0 when performing with ros::Service()
+        times_ = 0;
         
         /* initialization for ROS variables */
         rate_ = new ros::Rate(rate_hz_);
         
+        /* initialization for ROS Servicess */
+        srv_perform_square_ = nh_.advertiseService("/perform_square", &move_bb8::cbfunc, this);
+        
         /* initialization for ROS Publishers */
         pub_cmd_vel_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+        
+        
         
     }
     
@@ -109,6 +119,15 @@ namespace srv_sqr_traj {
         duration_ = duration;
         ROS_INFO("Change to state [%d]", state_);
     };
+    
+    bool move_bb8::cbfunc(std_srvs::Empty::Request &req,
+                          std_srvs::Empty::Response &res) {
+        running_ = !running_;
+        
+        // once for each side of the square
+        times_ = 4 * 1;
+        return running_;
+    }
     
     move_bb8::~move_bb8() {}
     

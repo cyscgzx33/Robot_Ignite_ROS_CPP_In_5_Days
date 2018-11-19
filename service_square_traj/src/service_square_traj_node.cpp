@@ -12,7 +12,12 @@ int main(int argc, char** argv) {
         
         mv_bb8.rate_sleep();
         
-        ros::spinOnce();
+        // The version without ros::Service
+        // ros::spinOnce();
+        
+        // The version with ros::Service
+        ros::spin();
+        
         
     }
     
