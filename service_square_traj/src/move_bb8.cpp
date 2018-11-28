@@ -67,7 +67,8 @@ namespace srv_sqr_traj {
     void move_bb8::runtimeStateMachine() {
         geometry_msgs::Twist vel;
         
-        running_ = true;
+        // in the version with ros::Service, we don't initialize running_ as true
+        // running_ = true;
         
         if (!running_) {
             vel.linear.x = 0;
@@ -91,6 +92,7 @@ namespace srv_sqr_traj {
             
             // determine what is the next state_ value
             int next_state = state_ + 1;
+            
             if (state_ == 3) {
                 next_state = 0;
                 times_ -= 1 ;

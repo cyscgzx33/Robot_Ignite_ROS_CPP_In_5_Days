@@ -12,14 +12,13 @@ int main(int argc, char** argv) {
         
         mv_bb8.rate_sleep();
         
-        // The version without ros::Service
-        // ros::spinOnce();
-        
-        // The version with ros::Service
-        ros::spin();
-        
+        ros::spinOnce();
         
     }
+    
+    // the version with ros::Service:
+    // don't know why, but we need to add "ros::spin()" here
+    ros::spin();
     
     return 0;
     
