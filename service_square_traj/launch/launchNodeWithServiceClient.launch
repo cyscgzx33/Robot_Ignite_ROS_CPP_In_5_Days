@@ -1,0 +1,4 @@
+<launch>
+    <!-- start service client -->
+    <node pkg = "service_square_traj" type = "service_square_traj_service_client" name = "service_square_traj_client" output = "screen" />
+</launch>
