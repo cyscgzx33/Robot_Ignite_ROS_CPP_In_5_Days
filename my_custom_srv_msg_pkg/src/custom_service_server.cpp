@@ -4,7 +4,7 @@
 bool myCbFunction(my_custom_srv_msg_pkg::MyCustomServiceMessage::Request  &req,
                   my_custom_srv_msg_pkg::MyCustomServiceMessage::Response &res) 
 {
-    ROS_INFO("Request Data: radius = %f, repetitions = %d", req.radius, res.repetitions);        
+    ROS_INFO("Request Data: radius = %f, repetitions = %d", req.radius, req.repetitions);        
     if (req.radius > 5.0) {
         res.success = true;
         ROS_INFO("sending back response : true");
@@ -16,4 +16,13 @@ bool myCbFunction(my_custom_srv_msg_pkg::MyCustomServiceMessage::Request  &req,
     return true;
 }
 
-int main
+int main(int argc, char** argv) {
+    ros::init(argc, argv, "my_custom_service_server");
+    ros::NodeHandle nh;
+    
+    ros::ServiceServer my_service_server = nh.advertiseService("/my_service", myCbFunction);
+    
+    ros::spin();
+    
+    return 0;
+}
