@@ -1,0 +1,6 @@
+float64 radius       # the distance of each side of the square
+int32 repetitions    # the number of times BB8 plans to execute the square movement when service is called
+
+---
+
+bool success         # the flag that indicates if BB8 achieves it
