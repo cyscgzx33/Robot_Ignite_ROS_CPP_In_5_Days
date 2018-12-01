@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
 #include <std_srvs/Empty.h>
+#include "services_quiz/BB8CustomServiceMessage.h"
 
 
 namespace srv_sqr_traj {
@@ -38,8 +39,8 @@ namespace srv_sqr_traj {
         
         void changeState(int state, float duaration);
         
-        bool cbfunc(std_srvs::Empty::Request &req,
-                    std_srvs::Empty::Response &res);
+        bool cbfunc(std_srvs::BB8CustomServiceMessage::Request &req,
+                    std_srvs::BB8CustomServiceMessage::Response &res);
         
     };
 

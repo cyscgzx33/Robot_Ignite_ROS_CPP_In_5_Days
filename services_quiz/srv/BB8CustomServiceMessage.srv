@@ -1,0 +1,4 @@
+float64 side          # the length of each side of the square
+int32 repetitions     # the number of times BB8 needs to execute the square traj when the service is called
+---
+bool success          # a flag that indicates if the task is achieved
