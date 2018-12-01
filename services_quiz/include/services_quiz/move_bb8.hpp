@@ -22,6 +22,10 @@ namespace srv_sqr_traj {
         int rate_hz_;
         float duration_;
         int times_;
+        // (added for services_quiz)
+        float side_;
+        int repetitions_;
+        
         
         /* ROS services */
         ros::ServiceServer srv_perform_square_;
@@ -39,8 +43,9 @@ namespace srv_sqr_traj {
         
         void changeState(int state, float duaration);
         
-        bool cbfunc(std_srvs::BB8CustomServiceMessage::Request &req,
-                    std_srvs::BB8CustomServiceMessage::Response &res);
+        bool cbfunc(services_quiz::BB8CustomServiceMessage::Request &req,
+                    services_quiz::BB8CustomServiceMessage::Response &res);
+
         
     };
 

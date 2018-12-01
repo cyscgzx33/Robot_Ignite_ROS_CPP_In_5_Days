@@ -1,4 +1,4 @@
-#include "service_square_traj/move_bb8.hpp"
+#include "services_quiz/move_bb8.hpp"
 
 namespace srv_sqr_traj {
     move_bb8::move_bb8() {
@@ -15,6 +15,10 @@ namespace srv_sqr_traj {
         
         // set times_ = 0 when performing with ros::Service()
         times_ = 0;
+        
+        // (added for services_quiz)
+        side_ = 0;
+        
         
         /* initialization for ROS variables */
         rate_ = new ros::Rate(rate_hz_);
@@ -88,7 +92,7 @@ namespace srv_sqr_traj {
         
         // when duration_ is run out, conduct this step to step into next state
         if (duration_ <= 0) {
-            float state_duration[4] = {2.0, 3.8, 4.0, 0.1}; // what does this do ???
+            float state_duration[4] = {side_, 3.8, 4.0, 0.1}; // what does this do ???
             
             // determine what is the next state_ value
             int next_state = state_ + 1;
@@ -115,19 +119,26 @@ namespace srv_sqr_traj {
         }
     }
         
-    
     void move_bb8::changeState(int state, float duration) {
         state_ = state;
         duration_ = duration;
         ROS_INFO("Change to state [%d]", state_);
     };
     
-    bool move_bb8::cbfunc(std_srvs::BB8CustomServiceMessage::Request &req,
-                          std_srvs::BB8CustomServiceMessage::Response &res) {
+    bool move_bb8::cbfunc(services_quiz::BB8CustomServiceMessage::Request &req,
+                          services_quiz::BB8CustomServiceMessage::Response &res) {
         running_ = !running_;
         
-        // once for each side of the square
-        times_ = 4 * 1;
+        // (added for services_quiz)
+        side_ = req.side;
+        repetitions_ = req.repetitions;
+        
+        // (non-services_quiz version) once for each side of the square
+        // times_ = 4 * 1;
+        
+        // (services_quiz version)
+        times_ = 4 * repetitions_;
+        
         return running_;
     }
     

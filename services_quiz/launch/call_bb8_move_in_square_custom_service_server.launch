@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "services_quiz" type = "bb8_move_custom_service_client" name = "MoveBB8Client" output = "screen" />
+</launch>
