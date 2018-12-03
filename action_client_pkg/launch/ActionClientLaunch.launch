@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "action_client_pkg" type = "ardrone_action_client" name = "drone_action_client" output = "screen" />
+</launch>
