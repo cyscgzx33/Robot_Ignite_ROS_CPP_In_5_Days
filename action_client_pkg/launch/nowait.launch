@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "action_client_pkg" type = "no_wait_for_result_test" name = "no_wait_for_result" output = "screen" />
+</launch>
