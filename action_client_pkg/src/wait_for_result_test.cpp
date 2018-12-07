@@ -33,6 +33,7 @@ int main(int argc, char** argv) {
     
     ros::Rate loop_rate(2);
     
+    // In this example, if the Action has not finished, it will never be activated
     while(!client.waitForResult()) {
         ROS_INFO("Doing stuff while waiting for server to give a result ...");
         loop_rate.sleep();

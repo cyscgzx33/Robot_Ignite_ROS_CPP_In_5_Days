@@ -36,6 +36,9 @@ int main(int argc, char** argv) {
     actionlib::SimpleClientGoalState state_result = client.getState();
     ROS_INFO("[State Result]: %s", state_result.toString().c_str());
     
+    
+    // As comparison, it allows other tasks to perform in parallel
+    // i.e., printing the log message while also printing the feedback from Action
     while (state_result == actionlib::SimpleClientGoalState::ACTIVE || state_result == actionlib::SimpleClientGoalState::PENDING) {
         ROS_INFO("Doing stuff while waiting for the Server to give a result ... ");
         loop_rate.sleep();
