@@ -20,13 +20,16 @@ void FibonacciAction::executeCB(const actionlib_tutorials::FibonacciGoalConstPtr
     ros::Rate rt_(1);
     bool success = true;
     
+    // ROS_INFO("Ethan Checking what is feedback_sequence[0] : %d", feedback_.sequence[0]);
+    
     // push_back the seeds for the fibonacci sequence
     feedback_.sequence.clear();
     feedback_.sequence.push_back(0);
     feedback_.sequence.push_back(1);
     
     // publish info to the console for the user
-    ROS_INFO("%s: Executing, creating fibonacci sequence of oder %i, %i", action_name_.c_str(), goal->order, feedback_.sequence[0], feedback_.sequence[1]);
+    ROS_INFO("%s: Executing, creating fibonacci sequence of order %i with seeds %i, %i", action_name_.c_str(), goal->order, feedback_.sequence[0], feedback_.sequence[1]);
+    // ROS_INFO("Ethan Checking in Cb, what is feedback_sequence[0] : %d", feedback_.sequence[0]);
     
     // start executing the action
     // an important component of an action server is the ability to allow an action client to request,
@@ -47,7 +50,7 @@ void FibonacciAction::executeCB(const actionlib_tutorials::FibonacciGoalConstPtr
         }
         
         feedback_.sequence.push_back(feedback_.sequence[i] + feedback_.sequence[i-1]);
-        
+        // ROS_INFO("Ethan Checking in the loop, what is feedback_sequence[0]: %d", feedback_.sequence[0]);
         
         // here the Fibonacci sequence is put into the feedback variable and then published on the feedback channel provided by action server
         // then the action continues on looping and publishing feedback
