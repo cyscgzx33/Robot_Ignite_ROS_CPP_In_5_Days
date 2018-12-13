@@ -1,0 +1,7 @@
+#goal
+std_msgs/String as_command # UP or Down 
+---
+#result (empty)
+---
+#feedback
+std_msgs/String as_command # UP or Down
