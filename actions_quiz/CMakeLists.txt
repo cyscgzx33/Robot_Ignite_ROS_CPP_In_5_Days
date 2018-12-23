@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   actionlib_msgs
   roscpp
   std_msgs
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -106,7 +107,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES actions_quiz
-   CATKIN_DEPENDS actionlib actionlib_msgs roscpp std_msgs
+   CATKIN_DEPENDS actionlib actionlib_msgs roscpp std_msgs geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -117,7 +118,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -134,7 +135,10 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/actions_quiz_node.cpp)
+add_executable(custom_action_node 
+    src/as_up_action_server.cpp 
+    src/custom_action.cpp
+)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -144,12 +148,12 @@ include_directories(
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(custom_action_node ${custom_action_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+target_link_libraries(custom_action_node
+  ${catkin_LIBRARIES}
+)
 
 #############
 ## Install ##

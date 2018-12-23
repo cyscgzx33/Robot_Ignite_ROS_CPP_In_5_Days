@@ -1,10 +1,12 @@
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
 #include <actions_quiz/CustomActionMsgAction.h>
+#include <geometry_msgs/Twist.h>
 
 class CustomActionMsgAction
 {
     protected:
+        
         ros::NodeHandle nh_;
         
         actionlib::SimpleActionServer<actions_quiz::CustomActionMsgAction> as_;
@@ -15,9 +17,13 @@ class CustomActionMsgAction
         
         actions_quiz::CustomActionMsgResult result_;
         
+        bool success;
+        
     public:
+        
         CustomActionMsgAction(std::string name);
+        
         ~CustomActionMsgAction();
         
         void executeCB(const actions_quiz::CustomActionMsgGoalConstPtr& goal);
-}
+};
