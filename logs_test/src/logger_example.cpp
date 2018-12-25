@@ -11,7 +11,7 @@ int main(int argc, char** argv) {
                 logging statements that have already been hit once (and therefore initialized) may
                 continue to print when they should not, and vice-versa
        ----------------------------------------------------------------------------------------------- */ 
-    if (ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug))
+    if (ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Warn)) // As a simple test, set it to "Warn"
     {
         ros::console::notifyLoggerLevelsChanged();
     }
@@ -27,24 +27,68 @@ int main(int argc, char** argv) {
     while (ros::ok()) {
         
         
+        // Initial Test: all of them show in /rosout
+        
+        /*
+        
+            // Level 0: DEBUG
+            ROS_DEBUG("There is a missing droid");
+            
+            
+            // Level 1: INFO
+            ROS_INFO("The Emperors Capuchino is done");
+            ROS_DEBUG("Test 0-1"); // Expected: not show
+            ROS_WARN("Test 2-1");  // Expected: show
+            
+            
+            // Level 2: Warn
+            ROS_WARN("Help me Obi-wan Kenobi, you're my only hope");
+            ROS_DEBUG("Test 0-2"); // Expected: not show
+            ROS_ERROR("Test 3-2"); // Expected: shwo
+            
+            // Level 3: ERROR
+            int exhaust_number = rand() % 100 + 1;
+            int port_number = rand() % 100 + 1;
+            ROS_ERROR("The thermal exhaust port %d, right below the main port %d", exhaust_number, port_number);
+            ROS_DEBUG("Test 0-3"); // Expected: not show
+            ROS_FATAL("Test 4-3"); // Expected: show
+            
+            
+            // Level 4: FATAL
+            ROS_FATAL("The DeathStar is EXPLODING");
+            
+        
+        */
+        
+        
+        
+        // Following test: Change the order of level
+        
+        // Level 0: DEBUG
         ROS_DEBUG("There is a missing droid");
         
         
-        ROS_INFO("The Emperors Capuchino is done");
-        
-        
-        ROS_WARN("Help me Obi-wan Kenobi, you're my only hope");
-        
-        
+        // Level 3: ERROR
         int exhaust_number = rand() % 100 + 1;
         int port_number = rand() % 100 + 1;
         ROS_ERROR("The thermal exhaust port %d, right below the main port %d", exhaust_number, port_number);
         
         
+        // Level 1: INFO
+        ROS_INFO("The Emperors Capuchino is done");
+        
+        
+        // Level 2: Warn
+        ROS_WARN("Help me Obi-wan Kenobi, you're my only hope");
+        
+
+        // Level 4: FATAL
         ROS_FATAL("The DeathStar is EXPLODING");
+        
         
         loop_rate.sleep();
         ros::spinOnce();
+        
         
     }
     
