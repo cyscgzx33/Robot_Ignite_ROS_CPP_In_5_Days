@@ -61,7 +61,6 @@ int main(int argc, char** argv) {
         */
         
         
-        
         // Following test: Change the order of level
         
         // Level 0: DEBUG
