@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
     
     ros::init(argc, argv, "custom_action_node");
     
-    CustomActionMsgAction ca("custom"); 
+    custom_action ca("custom"); 
     
     ros::spin();
     
