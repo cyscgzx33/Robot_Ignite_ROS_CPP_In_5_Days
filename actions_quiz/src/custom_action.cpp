@@ -21,7 +21,7 @@ custom_action::~custom_action() {}
 
 void custom_action::executeCB(const actions_quiz::CustomActionMsgGoalConstPtr& goal) 
 {
-    std::string up_down = goal->as_command.data; // does goal have a member goal?
+    std::string up_down = goal->as_command; // does goal have a member goal?
     
     ROS_INFO("%s: Executing, Goal is: %s, Feedback is: %s", action_name_.c_str(), goal->as_command, feedback_);
     
@@ -49,7 +49,7 @@ void custom_action::executeCB(const actions_quiz::CustomActionMsgGoalConstPtr& g
         
         
         // publish the feedback
-        feedback_.as_command.data = i;
+        feedback_.as_command = i;
         as_.publishFeedback(feedback_);
         
         rate_->sleep();
@@ -86,7 +86,7 @@ void custom_action::executeCB(const actions_quiz::CustomActionMsgGoalConstPtr& g
 
 void custom_action::stop_drone() {
     ROS_INFO("Stopping Drone...");
-    int i = 0;
+    int i = 0; 
     while (i < 3) {
         move_msg_.linear.x = 0;
         move_msg_.angular.z = 0;
@@ -132,6 +132,14 @@ void custom_action::takeoff_drone() {
     int i = 0;
     while (i < 4) {
         takeoff_pub_.publish(takeoff_msg_);
+        
+        // adding some snippet to try to make it work
+        // turns out to be not needed
+        /*
+            move_msg_.linear.x = 1;
+            move_msg_.angular.z = 0;
+            move_pub_.publish(move_msg_);
+        */
         rate_->sleep();
         
         i++;
@@ -143,6 +151,15 @@ void custom_action::land_drone() {
     int i = 0;
     while (i < 4)  {
         land_pub_.publish(land_msg_);
+        
+        // adding some snippet to try to make it work
+        // turns out to be not needed
+        /*
+            move_msg_.linear.x = -1;
+            move_msg_.angular.z = 0;
+            move_pub_.publish(move_msg_);
+        */
+        
         rate_->sleep();
         
         i++;

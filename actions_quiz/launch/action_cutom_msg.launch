@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "actions_quiz" type = "custom_action_node" name = "custom_action_node" output = "screen" />
+</launch>
