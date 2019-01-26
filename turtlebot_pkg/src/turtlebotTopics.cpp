@@ -34,9 +34,20 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
     // obtain the left, front and right distances
     // according to the LaserScan echo, it has 720 laser beams, 
     // ranges within [-pi, pi], with increment as 0.25 deg
-    left_dist_ = scan_msg.ranges[0];
-    front_dist_ = scan_msg.ranges[359];
-    right_dist_ = scan_msg.ranges[719];
+    
+    // set some lower bound default value of those distances
+    left_dist_ = 0.0;
+    front_dist_ = 0.0;
+    right_dist_ = 0.0;
+    
+    left_dist_ = scan_msg.ranges[0] > left_dist_ ? scan_msg.ranges[0] : left_dist_;
+    front_dist_ = scan_msg.ranges[359] > front_dist_ ? scan_msg.ranges[359] : front_dist_;
+    right_dist_ = scan_msg.ranges[719] > right_dist_ ? scan_msg.ranges[719] : right_dist_;
+    
+    // try to avoid "inf", set some higher bound default values
+    left_dist_ = 100.0 < left_dist_ ? 0.01 : left_dist_;
+    front_dist_ = 100.0 < front_dist_ ? 0.01 : front_dist_;
+    right_dist_ = 100 < right_dist_ ? 0.01 : right_dist_;
     
     // obtain the smallest distance in this time stamp
     smallest_dist_ = 30;
@@ -49,12 +60,12 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
     }
     
     /* implemented a very simple algorithm to control the turtlebot2 */
-    if (front_dist_ <= 0.2) {
-        cmd_vel_.linear.x = 0.0;
-        if (left_dist_ < right_dist_) cmd_vel_.angular.z = 0.5; // turn right 
-        else cmd_vel_.angular.z = -0.5; // turn left
+    if (front_dist_ <= 0.6 || smallest_dist_ <= 0.3) {
+        cmd_vel_.linear.x = 0.03; // trick: give it a small speed
+        if (left_dist_ < right_dist_) cmd_vel_.angular.z = 0.7; // turn right 
+        else cmd_vel_.angular.z = -0.7; // turn left
     } else {
-        cmd_vel_.linear.x = 0.5; // go straight forward
+        cmd_vel_.linear.x = 0.4; // go straight forward
         cmd_vel_.angular.z = 0.0; // do not turn
     }
     
@@ -63,6 +74,7 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
     ROS_INFO("Successfully published to /cmd_vel");
     ROS_INFO("left_dist_:%f, front_dist_:%f, right_dist_:%f", left_dist_, front_dist_, right_dist_);
     ROS_INFO("linear.x:%f, angular.z:%f", cmd_vel_.linear.x, cmd_vel_.angular.z);
+    ROS_INFO("smallest_dist_:%f", smallest_dist_);
 }
 
 turtlebotTopics::~turtlebotTopics() {};
