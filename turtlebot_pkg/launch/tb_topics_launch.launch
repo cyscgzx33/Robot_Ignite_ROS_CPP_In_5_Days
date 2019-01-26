@@ -1,0 +1,3 @@
+<launch>
+    <node pkg = "turtlebot_pkg" type = "turtlebot_topic" name = "turtlebot_topic_node" output = "screen" />
+</launch>

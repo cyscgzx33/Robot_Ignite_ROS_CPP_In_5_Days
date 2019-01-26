@@ -22,7 +22,7 @@ void turtlebotTopics::callBackOdom(const nav_msgs::Odometry& odom_msg) {
     odom_pos_Y_wf_ = odom_msg.pose.pose.position.y;
     odom_angVel_Z_lf_ = odom_msg.twist.twist.angular.z; 
     odom_vel_X_lf_ = odom_msg.twist.twist.linear.x;
-    odom_vek_Y_lf_ = odom_msg.twist.twist.linear.y;
+    odom_vel_Y_lf_ = odom_msg.twist.twist.linear.y;
     
 }
 
@@ -34,7 +34,6 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
     // obtain the left, front and right distances
     // according to the LaserScan echo, it has 720 laser beams, 
     // ranges within [-pi, pi], with increment as 0.25 deg
-    
     left_dist_ = scan_msg.ranges[0];
     front_dist_ = scan_msg.ranges[359];
     right_dist_ = scan_msg.ranges[719];
@@ -49,6 +48,21 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
         smallest_dist_dir_ = smallest_dist_ > scan_range[i] ? i : smallest_dist_dir_;
     }
     
+    /* implemented a very simple algorithm to control the turtlebot2 */
+    if (front_dist_ <= 0.2) {
+        cmd_vel_.linear.x = 0.0;
+        if (left_dist_ < right_dist_) cmd_vel_.angular.z = 0.5; // turn right 
+        else cmd_vel_.angular.z = -0.5; // turn left
+    } else {
+        cmd_vel_.linear.x = 0.5; // go straight forward
+        cmd_vel_.angular.z = 0.0; // do not turn
+    }
     
+    /* publish to /cmd_vel and output some info */
+    cmd_vel_pub_.publish(cmd_vel_);
+    ROS_INFO("Successfully published to /cmd_vel");
+    ROS_INFO("left_dist_:%f, front_dist_:%f, right_dist_:%f", left_dist_, front_dist_, right_dist_);
+    ROS_INFO("linear.x:%f, angular.z:%f", cmd_vel_.linear.x, cmd_vel_.angular.z);
 }
 
+turtlebotTopics::~turtlebotTopics() {};

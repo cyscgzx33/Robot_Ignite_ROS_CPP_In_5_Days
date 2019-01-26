@@ -34,7 +34,7 @@ class turtlebotTopics {
         int smallest_dist_dir_;
         float front_dist_;
         float left_dist_;
-        float right_dis_;
+        float right_dist_;
         
         // related to Odom: *_wf_ means in world frame, *_lf means in local frame
         float odom_angPos_Z_wf_; 
