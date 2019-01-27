@@ -1,6 +1,7 @@
 #include <ros/ros.h>
 #include "turtlebot_pkg/turtlebotTopics.h"
 
+
 turtlebotTopics::turtlebotTopics(ros::NodeHandle& nh):nh_(nh) {
     
     cmd_vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
@@ -69,8 +70,15 @@ void turtlebotTopics::callBackLaserScan(const sensor_msgs::LaserScan& scan_msg) 
         cmd_vel_.angular.z = 0.0; // do not turn
     }
     
+    /* adding a condition to avoid those concave corners */
+    if (left_dist_ <= 0.2 && right_dist_ <= 0.2) {
+        cmd_vel_.linear.x = 0.03;
+        cmd_vel_.angular.z = -1.0; // turn left quickly (which is not a comprehensive solution)
+    }
+    
     /* publish to /cmd_vel and output some info */
     cmd_vel_pub_.publish(cmd_vel_);
+    
     ROS_INFO("Successfully published to /cmd_vel");
     ROS_INFO("left_dist_:%f, front_dist_:%f, right_dist_:%f", left_dist_, front_dist_, right_dist_);
     ROS_INFO("linear.x:%f, angular.z:%f", cmd_vel_.linear.x, cmd_vel_.angular.z);

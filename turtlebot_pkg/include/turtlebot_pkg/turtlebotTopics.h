@@ -28,15 +28,15 @@ class turtlebotTopics {
         geometry_msgs::Twist cmd_vel_;
         
         /* Regular variables */
-        
-        // related to laserScan
+        // part I: related to laserScan
         float smallest_dist_;
         int smallest_dist_dir_;
         float front_dist_;
         float left_dist_;
         float right_dist_;
         
-        // related to Odom: *_wf_ means in world frame, *_lf means in local frame
+        // part II: related to Odom, 
+        // *_wf_ means in world frame, *_lf means in local frame
         float odom_angPos_Z_wf_; 
         float odom_pos_X_wf_;
         float odom_pos_Y_wf_;
